@@ -1,31 +1,33 @@
 <?php
+
 /**
- *le routeur est chargeé d'écouter les requètes HTTP provenant
- *du client web puis d'y répondre avec le contenu approprié.
+ * Le routeur est chargé d'écouter les 
+ * requêtes HTTP provenant du client web 
+ * puis d'y répondre avec le contenu approprié.
  */
+$path = $_SERVER['REQUEST_URI'];
 
-switch ($_SERVER['REQUEST_URI']) {
+$cleanPath = preg_replace('/\?.*/', '', $path);
+
+switch ($cleanPath) {
     case '/':
-        echo "page d'accueil";
+        include './templates/home.php';
         break;
-
+    // Filter à partir de la fin de l'URL
     case '/about':
-        echo "page de présentation";
+        include './templates/about.php';
         break;
-
     case '/skills':
-        echo "page de de skills";
+        include './templates/skills.php';
         break;
-
     case '/projects':
-        echo "page de projets";
+        include './templates/projects.php';
         break;
-
     case '/contact':
-        echo "page de contact";
+        include './templates/contact.php';
         break;
 
     default:
-        echo "page 404, introuvable";
+        echo 'Page introuvable - 404 ';
         break;
 }

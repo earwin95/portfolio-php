@@ -1,53 +1,61 @@
-echo 'Looking to send emails in production? Check out our Email API/SMTP product!'
-curl \
---ssl-reqd \
---url 'smtp://sandbox.smtp.mailtrap.io:2525' \
---user '60a1aa9f7309c9:7303f3e2971add' \
---mail-from from@example.com \
---mail-rcpt to@example.com \
---upload-file - <<EOF
-From: Magic Elves <from@example.com>
-To: Mailtrap Inbox <to@example.com>
-Subject: You are awesome!
-Content-Type: multipart/alternative; boundary="boundary-string"
+<?php
+    // Récupération de la page courante
+    $currentPage = $_SERVER['REQUEST_URI']; // '/quelque-chose'
+?>
+<!DOCTYPE html>
+<html lang="fr">
 
---boundary-string
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/style.css">
+    <script src="./assets/main.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-Congrats for sending test email with Mailtrap!
+<body>
+    <header class="bg-white text-orange-700">
+        <nav class="p-2 flex justify-between items-center border-b border-slate-200 sticky top-0">
+            <!-- Logo -->
+            <a href="/">
+                <img src="./images/logo.png" alt="votre logo" width="50">
+            </a>
 
-If you are viewing this email in your inbox =E2=80=93 the integration works.
-Now send your email using our SMTP server and integration of your choice!
+            <!-- Bouton hamburger pour mobile -->
+            <button id="menu-btn" class="md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
 
-Good luck! Hope it works.
+            <!-- Menu navigation -->
+            <ul class="bg-slate-100 p-1 rounded-lg hidden md:flex gap-4" id="menu">
+                <li class="p-2 hover:text-slate-800 <?= $currentPage == '/about' ? 'bg-white text-slate-800 b rounded-lg shadow-md' : '' ?>">
+                    <a href="/about">Présentation</a>
+                </li>
+                <li class="p-2 hover:text-slate-800 <?= $currentPage == '/skills' ? 'bg-white text-slate-800 b rounded-lg shadow-md' : '' ?>">
+                    <a href="/skills">Mes compétences</a>
+                </li>
+                <li class="p-2 hover:text-slate-800 <?= $currentPage == '/projects' ? 'bg-white text-slate-800 b rounded-lg shadow-md' : '' ?>">
+                    <a href="/projects">Mes projets</a>
+                </li>
+                <li class="p-2 hover:text-slate-800 <?= $currentPage == '/contact' ? 'bg-white text-slate-800 b rounded-lg shadow-md' : '' ?>">
+                    <a href="/contact">Contact</a>
+                </li>
+            </ul>
+        </nav>
 
---boundary-string
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-<!doctype html>
-<html>
-  <head>
-    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
-  </head>
-  <body style=3D"font-family: sans-serif;">
-    <div style=3D"display: block; margin: auto; max-width: 600px;" class=3D"main">
-      <h1 style=3D"font-size: 18px; font-weight: bold; margin-top: 20px">Congrats for sending test email with Mailtrap!</h1>
-      <p>If you are viewing this email in your inbox =E2=80=93 the integration works.</p>
-      <img alt=3D"Inspect with Tabs" src=3D"https://assets-examples.mailtrap.io/integration-examples/welcome.png" style=3D"width: 100%;">
-      <p>Now send your email using our SMTP server and integration of your choice!</p>
-      <p>Good luck! Hope it works.</p>
-    </div>
-    <!-- Example of invalid for email html/css, will be detected by Mailtrap: -->
-    <style>
-      .main { background-color: white; }
-      a:hover { border-left-width: 1em; min-height: 2em; }
-    </style>
-  </body>
-</html>
-
---boundary-string--
-EOF
+        <!-- Menu mobile -->
+        <nav id="mobile-menu" class="hidden md:hidden fixed top-18 right-0 w-1/2 h-screen border-l border-slate-200 bg-white text-slate-700">
+            <ul class="flex flex-col p-4">
+                <li class="p-2 hover:bg-slate-100 hover:text-amber-600"><a href="/about" class="">Présentation</a></li>
+                <li class="p-2 hover:bg-slate-100 hover:text-amber-600"><a href="/skills" class="">Mes compétences</a></li>
+                <li class="p-2 hover:bg-slate-100 hover:text-amber-600"><a href="/projects" class="">Mes projets</a></li>
+                <li class="p-2 hover:bg-slate-100 hover:text-amber-600"><a href="/contact" class="">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
